@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>浜ゆ槗鏃ヨ Trading Journal</title>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-mobile-web-app-title" content="浜ゆ槗鏃ヨ" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>浜ゆ槗鏃ヨ</h1>
+    <div id="totalPnl" class="total-pnl">鎬荤泩浜忥細楼0.00</div>
+  </header>
+
+  <nav>
+    <button data-tab="add" class="active">璁颁竴绗?/button>
+    <button data-tab="list">鍏ㄩ儴璁板綍</button>
+    <button data-tab="summary">姣忔棩姹囨€?/button>
+    <button data-tab="backup">澶囦唤/鎭㈠</button>
+  </nav>
+
+  <main>
+    <section id="tab-add" class="tab active">
+      <form id="tradeForm">
+        <label>鏃ユ湡<input type="date" id="date" required /></label>
+        <label>鑲＄エ浠ｇ爜/鍚嶇О<input type="text" id="symbol" placeholder="濡?600519 璐靛窞鑼呭彴" required /></label>
+        <label>鏂瑰悜
+          <select id="direction">
+            <option value="Long">鍋氬</option>
+            <option value="Short">鍋氱┖</option>
+          </select>
+        </label>
+        <label>鏁伴噺<input type="number" id="quantity" min="1" step="1" required /></label>
+        <label>涔板叆浠?input type="number" id="entryPrice" min="0" step="0.0001" required /></label>
+        <label>鍗栧嚭浠?input type="number" id="exitPrice" min="0" step="0.0001" required /></label>
+        <label>鎵嬬画璐癸紙鍙€夛級<input type="number" id="fees" min="0" step="0.01" /></label>
+        <label>澶囨敞锛堝彲閫夛級<textarea id="notes" rows="2"></textarea></label>
+        <button type="submit">淇濆瓨璁板綍</button>
+      </form>
+      <div id="lastPnl" class="last-pnl"></div>
+    </section>
+
+    <section id="tab-list" class="tab">
+      <div class="toolbar">
+        <input type="text" id="filterSymbol" placeholder="鎸変唬鐮?鍚嶇О杩囨护" />
+        <button id="clearFilter">娓呯┖</button>
+      </div>
+      <ul id="tradeList" class="list"></ul>
+    </section>
+
+    <section id="tab-summary" class="tab">
+      <ul id="dailySummary" class="list"></ul>
+    </section>
+
+    <section id="tab-backup" class="tab">
+      <div class="backup">
+        <button id="exportBtn">瀵煎嚭JSON</button>
+        <input type="file" id="importFile" accept="application/json" />
+        <button id="importBtn">瀵煎叆JSON</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <small>鏁版嵁淇濆瓨鍦ㄦ湰鏈猴紝涓嶄細鑷姩涓婁紶銆?/small>
+  </footer>
+
+  <script src="app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./service-worker.js').catch(err => console.log('SW娉ㄥ唽澶辫触', err));
+      });
+    }
+  </script>
+</body>
+</html>
